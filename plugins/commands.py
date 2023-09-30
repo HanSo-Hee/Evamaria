@@ -289,7 +289,7 @@ async def channel_info(bot, message):
         os.remove(file)
 
 @Client.on_message(filters.command('set_site') & (filters.private | filters.group))
-async def set_shortner(bot, message):
+async def set_shortner(client, message):
     user_id = message.from_user.id if message.from_user else None
     chat_type = message.chat.type
 
@@ -332,7 +332,7 @@ async def set_shortner(bot, message):
     await message.reply_text(f'Your Shortener saved successfully!\n\nYour Shortener: {shortener}')
 
 @Client.on_message(filters.command('set_api') & (filters.private | filters.group))
-async def set_api(bot, message):
+async def set_api(client, message):
     user_id = message.from_user.id if message.from_user else None
     chat_type = message.chat.type
 
