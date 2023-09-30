@@ -4,6 +4,7 @@ import random
 import asyncio
 from Script import script
 from pyrogram import Client, filters, enums
+from pyrogram.enums import ChatType, ChatMemberStatus
 from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
@@ -287,7 +288,93 @@ async def channel_info(bot, message):
         await message.reply_document(file)
         os.remove(file)
 
+@Client.on_message(filters.command('set_site') & (filters.private | filters.group))
+async def set_shortner(client: Client, message: Message):
+    user_id = message.from_user.id if message.from_user else None
+    chat_type = message.chat.type
 
+    if not user_id:
+        return await message.reply(f"You are an anonymous admin. Use /connect {message.chat.id} in PM")
+
+    if chat_type == ChatType.PRIVATE:
+        grpid = await active_connection(str(user_id))
+        if grpid is not None:
+            grp_id = grpid
+            try:
+                chat = await client.get_chat(grpid)
+                title = chat.title
+            except:
+                await message.reply_text("Make sure I'm present in your group!", quote=True)
+                return
+        else:
+            await message.reply_text("I'm not connected to any groups!", quote=True)
+            return
+
+    elif chat_type in [ChatType.GROUP, ChatType.SUPERGROUP]:
+        grp_id = message.chat.id
+        title = message.chat.title
+
+    else:
+        return
+
+    st = await client.get_chat_member(grp_id, user_id)
+    if (
+            st.status != ChatMemberStatus.ADMINISTRATOR
+            and st.status != ChatMemberStatus.OWNER
+    ):
+        return
+
+    if len(message.command) == 1:
+        return await message.reply_text("Give me shortener URL to set\n\nExample - /set_site shortener_domain(example.com)")
+
+    shortener = message.text.split(' ', 1)[1]
+    await db.set_shortner(user_id, shortener=shortener)
+    await message.reply_text(f'Your Shortener saved successfully!\n\nYour Shortener: {shortener}')
+
+@Client.on_message(filters.command('set_api') & (filters.private | filters.group))
+async def set_api(client: Client, message: Message):
+    user_id = message.from_user.id if message.from_user else None
+    chat_type = message.chat.type
+
+    if not user_id:
+        return await message.reply(f"You are an anonymous admin. Use /connect {message.chat.id} in PM")
+
+    if chat_type == ChatType.PRIVATE:
+        grpid = await active_connection(str(user_id))
+        if grpid is not None:
+            grp_id = grpid
+            try:
+                chat = await client.get_chat(grpid)
+                title = chat.title
+            except:
+                await message.reply_text("Make sure I'm present in your group!", quote=True)
+                return
+        else:
+            await message.reply_text("I'm not connected to any groups!", quote=True)
+            return
+
+    elif chat_type in [ChatType.GROUP, ChatType.SUPERGROUP]:
+        grp_id = message.chat.id
+        title = message.chat.title
+
+    else:
+        return
+
+    st = await client.get_chat_member(grp_id, user_id)
+    if (
+            st.status != ChatMemberStatus.ADMINISTRATOR
+            and st.status != ChatMemberStatus.OWNER
+    ):
+        return
+
+    if len(message.command) == 1:
+        return await message.reply_text("Give me API key to set\n\nExample - /set_api your_api_key\n\nGet your API key from your shortener.")
+
+    api = message.text.split(' ', 1)[1]
+    await db.set_api(user_id, api=api)
+    await message.reply_text(f'API key saved successfully!\n\nYour API: {api}')
+
+    
 @Client.on_message(filters.command('logs') & filters.user(ADMINS))
 async def log_file(bot, message):
     """Send log file"""
