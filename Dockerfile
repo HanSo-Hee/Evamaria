@@ -1,9 +1,12 @@
-FROM python:3.8.7
+FROM python:3.8-slim-buster
 
-WORKDIR /TamilanBotsZ
+RUN apt update && apt upgrade -y
+RUN apt install git -y
+COPY requirements.txt /requirements.txt
 
-COPY requirements.txt ./
-
-RUN pip install -r requirements.txt
-
-CMD ["python3", "bot.py"]
+RUN cd /
+RUN pip3 install -U pip && pip3 install -U -r requirements.txt
+RUN mkdir /Evamaria
+WORKDIR /Evamaria
+COPY start.sh /start.sh
+CMD ["/bin/bash", "/start.sh"]
