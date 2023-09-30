@@ -18,6 +18,8 @@ class Database:
             ban_status=dict(
                 is_banned=False,
                 ban_reason="",
+                api=None,
+                shortner=None,
             ),
         )
 
@@ -120,7 +122,20 @@ class Database:
         if chat:
             return chat.get('settings', default)
         return default
-    
+
+    async def set_api(self, user_id, api):
+        await self.col.update_one({'id': int(user_id)}, {'$set': {'api': api}})
+
+    async def get_api(self, user_id):
+        user = await self.col.find_one({'id': int(user_id)})
+        return user.get('api', None)
+
+    async def set_shortner(self, user_id, shortner):
+        await self.col.update_one({'id': int(user_id)}, {'$set': {'shortner': shortner}})
+
+    async def get_shortner(self, user_id):
+        user = await self.col.find_one({'id': int(user_id)})
+        return user.get('shortner', None)
 
     async def disable_chat(self, chat, reason="No Reason"):
         chat_status=dict(
