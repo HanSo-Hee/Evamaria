@@ -381,25 +381,29 @@ def humanbytes(size):
 async def get_shortlink(u_id, link):
     URL = await db.get_shortner(u_id)
     API = await db.get_api(u_id)
+    
     https = link.split(":")[0]
     if "http" == https:
         https = "https"
         link = link.replace("http", https)
+    
     url = f'https://{URL}/api'
-    params = {'api': API,
-              'url': link,
-              }
+    params = {'api': API, 'url': link}
 
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, params=params, raise_for_status=True, ssl=False) as response:
-                data = await response.json()
-                if data["status"] == "success":
-                    return data['shortenedUrl']
+            async with session.get(url, params=params, raise_for_status=True) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    if data["status"] == "success":
+                        return data['shortenedUrl']
+                    else:
+                        logger.error(f"Error: {data['message']}")
                 else:
-                    logger.error(f"Error: {data['message']}")
-                    return f'{link}'
-
+                    logger.error(f"HTTP Error: {response.status}")
+  except aiohttp.ClientError as e:
+        logger.error(f"HTTP Client Error: {e}")
     except Exception as e:
-        logger.error(e)
-        return f'{link}'
+        logger.error(f"Error: {e}")
+
+    return link
