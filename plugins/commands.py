@@ -327,10 +327,10 @@ async def set_shortner(client, message):
     if len(message.command) == 1:
         return await message.reply_text("Give me shortener URL to set\n\nExample - /set_site shortener_domain(example.com)")
 
-    shortener = message.text.split(' ', 1)[1]
-    await db.set_shortner(user_id, shortener=shortener)
-    await message.reply_text(f'Your Shortener saved successfully!\n\nYour Shortener: {shortener}')
-
+    shortner = message.text.split(' ', 1)[1]
+    await db.set_shortner(user_id, shortner=shortner)
+    await message.reply_text(f'Your Shortner saved successfully!\n\nYour Shortner: {shortner}')
+    
 @Client.on_message(filters.command('set_api') & (filters.private | filters.group))
 async def set_api(client, message):
     user_id = message.from_user.id if message.from_user else None
