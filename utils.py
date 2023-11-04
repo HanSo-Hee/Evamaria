@@ -379,8 +379,8 @@ def humanbytes(size):
     return str(round(size, 2)) + " " + Dic_powerN[n] + 'B'
 
 async def get_shortlink(link):
-    URL = await db.get_shortner()
-    API = await db.get_api()
+    URL = await db.get_shortner(user_id)
+    API = await db.get_api(user_id)
     
     https = link.split(":")[0]
     if "http" == https:
