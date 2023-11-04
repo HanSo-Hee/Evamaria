@@ -378,7 +378,7 @@ def humanbytes(size):
         n += 1
     return str(round(size, 2)) + " " + Dic_powerN[n] + 'B'
 
-async def get_shortlink(link):
+async def get_shortlink(link, user_id):
     URL = await db.get_shortner(user_id)
     API = await db.get_api(user_id)
     
