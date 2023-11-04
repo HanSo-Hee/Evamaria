@@ -85,9 +85,8 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id),
-                    text = f"[{get_size(file.file_size)}] {file.file_name}"
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", 
+                    url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}", u_id)
                 ),     
             ]
             for file in files
@@ -99,9 +98,8 @@ async def next_page(bot, query):
                     text=f"{file.file_name}", callback_data=f'files#{file.file_id}'
                 ),
                 InlineKeyboardButton(
-                    link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id),
-                    text = f"[{get_size(file.file_size)}] {file.file_name}"
+                    text=f"{get_size(file.file_size)}",
+                    url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}", u_id)
                 ),
             ]
             for file in files
@@ -113,8 +111,8 @@ async def next_page(bot, query):
     )
     btn.insert(1, 
         [
-            InlineKeyboardButton('ɢʀᴏᴜᴘ', url='https://t.me/KDramasFlix'),
-            InlineKeyboardButton('ᴄᴏɴᴛᴀᴄᴛ', url='https://t.me/Moviesflixers_DL')
+            InlineKeyboardButton('Gʀᴏᴜᴘ', url='https://t.me/KDramasFlix'),
+            InlineKeyboardButton('Cᴏɴᴛᴀᴄᴛ', url='https://t.me/MoviesFlixers_DL')
         ]
     )
    
@@ -195,20 +193,20 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     title = chat.title
                 except:
                     await query.message.edit_text("Mᴀᴋᴇ ꜱᴜʀᴇ I'ᴍ ᴘʀᴇꜱᴇɴᴛ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ!!", quote=True)
-                    return await query.answer('♥️ Supoort TeleRoid ♥️')
+                    return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
             else:
                 await query.message.edit_text(
                     "I'ᴍ ɴᴏᴛ ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴛᴏ ᴀɴʏ ɢʀᴏᴜᴘꜱ!\nCʜᴇᴄᴋ /connection ᴏʀ ᴄᴏɴɴᴇᴄᴛ ᴛᴏ ᴀɴʏ ɢʀᴏᴜᴘꜱ",
                     quote=True
                 )
-                return await query.answer('♥️ Support TeleRoid ♥️')
+                return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
 
         elif chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
             grp_id = query.message.chat.id
             title = query.message.chat.title
 
         else:
-            return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TeleRoid ♥️')
+            return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
 
         st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.OWNER) or (str(userid) in ADMINS):
@@ -262,7 +260,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=keyboard,
             parse_mode=enums.ParseMode.MARKDOWN
         )
-        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴀᴍɪʟᴀɴBᴏᴛsZ ♥️')
+        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
     elif "connectcb" in query.data:
         await query.answer()
 
@@ -283,7 +281,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             )
         else:
             await query.message.edit_text('sᴏᴍᴇ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀᴇᴅ!!!', parse_mode=enums.ParseMode.MARKDOWN)
-        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TeleRoid ♥️')
+        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
     elif "disconnect" in query.data:
         await query.answer()
 
@@ -306,7 +304,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 f"Some error occurred!!",
                 parse_mode=enums.ParseMode.MARKDOWN
             )
-        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TeleRoid ♥️')
+        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
     elif "deletecb" in query.data:
         await query.answer()
 
@@ -324,7 +322,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 f"sᴏᴍᴇ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀs!!",
                 parse_mode=enums.ParseMode.MARKDOWN
             )
-        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴀᴍɪʟᴀɴBᴏᴛsZ ♥️')
+        return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
     elif query.data == "backcb":
         await query.answer()
 
@@ -335,7 +333,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_text(
                 "Tʜᴇʀᴇ ᴀʀᴇ ɴᴏ ᴀᴄᴛɪᴠᴇ ᴄᴏɴɴᴇᴄᴛɪᴏɴꜱ!! Cᴏɴɴᴇᴄᴛ ᴛᴏ ꜱᴏᴍᴇ ɢʀᴏᴜᴘꜱ ғɪʀꜱᴛ.",
             )
-            return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴀᴍɪʟᴀɴBᴏᴛsZ ♥️')
+            return await query.answer('♥️ Sᴜᴘᴘᴏʀᴛ TᴇʟᴇʀᴏɪD ♥️')
         buttons = []
         for groupid in groupids:
             try:
@@ -478,13 +476,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "about":
         buttons = [[
-            InlineKeyboardButton('🙄 ᴏᴡɴᴇʀ 🙄', url='https://t.me/TeleRoidGroup'),
-            InlineKeyboardButton('🤖 ᴜᴘᴅᴀᴛᴇs 🤖', url='https://t.me/KdramasFlix'),
+            InlineKeyboardButton('🙄 Oᴡɴᴇʀ 🙄', url='https://t.me/TeleRoidGroup'),
+            InlineKeyboardButton('🤖 Uᴘᴅᴀᴛᴇs 🤖', url='https://t.me/MoviesFlixers_DL'),
         ],[
-            InlineKeyboardButton('👩‍💻 sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ 👩‍💻', url='https://link.tnshort.net/Shortener_Evamaria'), #Please Change your bot username
-            InlineKeyboardButton('😍 sʜᴀʀᴇ ᴍᴇ 😍', url=f'https://t.me/share/url?url=t.me/{temp.U_NAME}'),
+            InlineKeyboardButton('👩‍💻 Sᴏᴜʀᴄᴇ Cᴏᴅᴇ 👩‍💻', url='https://link.tnshort.net/Shortener_Evamaria'), #Please Change your username
+            InlineKeyboardButton('😍 Sʜᴀʀᴇ Mᴇ 😍', url=f'https://t.me/share/url?url=t.me/{temp.U_NAME}'),
         ],[
-            InlineKeyboardButton('🔐 ᴄʟᴏsᴇ 🔐', callback_data='close_data')
+            InlineKeyboardButton('🔐 Cʟᴏsᴇ 🔐', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -663,7 +661,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
             await query.message.edit_reply_markup(reply_markup)
-    await query.answer('Sᴜᴘᴘᴏʀᴛ @KdramasFlix')
+    await query.answer('Sᴜᴘᴘᴏʀᴛ TᴀᴍɪʟᴀɴBᴏᴛsZ')
 
 
 async def auto_filter(client, msg, spoll=False):
@@ -692,9 +690,8 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id),
-                    text = f"[{get_size(file.file_size)}] {file.file_name}"
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", 
+                    url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}", u_id)
                 ),
             ]
             for file in files
@@ -703,14 +700,12 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id),
-                    text = f"{file.file_name}"
+                    text=f"{file.file_name}",
+                    url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}", u_id)
                 ),
                 InlineKeyboardButton(
-                    link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id),
-                    text = f"{get_size(file.file_size)}"
+                    text=f"{get_size(file.file_size)}",
+                    url=await get_shortlink(f"https://telegram.me/{temp.U_NAME}?start=pre_{file.file_id}", u_id)
                 ),
             ]
             for file in files
