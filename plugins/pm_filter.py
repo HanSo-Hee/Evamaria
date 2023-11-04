@@ -86,7 +86,7 @@ async def next_page(bot, query):
             [
                 InlineKeyboardButton(
                     link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id)
+                    url = await get_shortlink(link, u_id),
                     text = f"[{get_size(file.file_size)}] {file.file_name}"
                 ),     
             ]
@@ -100,7 +100,7 @@ async def next_page(bot, query):
                 ),
                 InlineKeyboardButton(
                     link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id)
+                    url = await get_shortlink(link, u_id),
                     text = f"[{get_size(file.file_size)}] {file.file_name}"
                 ),
             ]
@@ -693,7 +693,7 @@ async def auto_filter(client, msg, spoll=False):
             [
                 InlineKeyboardButton(
                     link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id)
+                    url = await get_shortlink(link, u_id),
                     text = f"[{get_size(file.file_size)}] {file.file_name}"
                 ),
             ]
@@ -704,12 +704,12 @@ async def auto_filter(client, msg, spoll=False):
             [
                 InlineKeyboardButton(
                     link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id)
+                    url = await get_shortlink(link, u_id),
                     text = f"{file.file_name}"
                 ),
                 InlineKeyboardButton(
                     link = f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}",
-                    url = await get_shortlink(link, u_id)
+                    url = await get_shortlink(link, u_id),
                     text = f"{get_size(file.file_size)}"
                 ),
             ]
