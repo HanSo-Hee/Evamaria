@@ -401,7 +401,7 @@ async def get_shortlink(u_id, link):
                         logger.error(f"Error: {data['message']}")
                 else:
                     logger.error(f"HTTP Error: {response.status}")
-  except aiohttp.ClientError as e:
+    except aiohttp.ClientError as e:
         logger.error(f"HTTP Client Error: {e}")
     except Exception as e:
         logger.error(f"Error: {e}")
